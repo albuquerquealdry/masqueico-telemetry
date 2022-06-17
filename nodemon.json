@@ -1,4 +1,8 @@
-{"scripts": {
-    "dev": "nodemon -r .env" 
-  }
+{
+  "verbose": true,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "delay": 10000
 }
