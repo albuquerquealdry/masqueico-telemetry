@@ -1,5 +1,3 @@
-import { trace } from "console"
-
 const {BatchSpanProcessor} = require('@opentelemetry/tracing')
 const { Resource } = require('@opentelemetry/resources')
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions')
@@ -13,10 +11,10 @@ const host = process.env.HOST_JEAGER || 'localhost'
 console.log(host)
   const options = {
     tags: [],
-    endpoint: `${host}`,
+    endpoint: `http://localhost:14268/api/traces`,
   }
   
-  const init = (serviceName) => {  
+  const jeagerExporter = (serviceName) => {  
     const exporter = new JaegerExporter(options)
   
     const provider = new NodeTracerProvider({
@@ -37,5 +35,5 @@ console.log(host)
   }
   
   module.exports = {
-    init: init,
+    jeagerExporter: jeagerExporter,
   }

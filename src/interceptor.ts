@@ -2,12 +2,13 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-const { init } = require('./otel/jeaguer.exporter')
-const { init2 } = require("./otel/zipkin.exporter")
+const { jeagerExporter } = require('./otel/jeaguer.exporter')
+const { zipkinExporter } = require("./otel/zipkin.exporter")
+const { pro } = require("./otel/prometheus.exporter")
 const api = require('@opentelemetry/api')
-init('teste')
 
-init2()
+zipkinExporter()
+jeagerExporter('teste')
 export interface Response<T> {
   data: T;
 }
@@ -17,7 +18,6 @@ export interface Response<T> {
 export class Telemetry implements NestInterceptor {
   
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-
     const now = Date.now();
     return next
       .handle()
